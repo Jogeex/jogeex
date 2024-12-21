@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Bear Image Generator</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 50px auto;
+            max-width: 600px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styles */
+        button {
+            padding: 12px 18px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #2c81ba;
+            transform: scale(1.05);
+        }
+
+        /* Image Styles */
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Bear Image Generator</h1>
+    <p>Click the button below to see a random bear image.</p>
+    <button id="fetchButton">Get Random Bear</button>
+    <div id="imageContainer">
+        <img id="bearImage" src="" alt="Click the button to load a bear image!" hidden>
+    </div>
+
+    <footer>
+        Powered by <a href="https://placebear.com/" target="_blank" rel="noopener noreferrer">PlaceBear API</a>
+    </footer>
+
+    <script>
+        // Select DOM elements
+        const fetchButton = document.getElementById("fetchButton");
+        const bearImage = document.getElementById("bearImage");
+
+        // Add event listener to the button
+        fetchButton.addEventListener("click", displayRandomBear);
+
+        /**
+         * Display a random bear image using the PlaceBear API.
+         */
+        function displayRandomBear() {
+            // Generate a random seed for unique bear images
+            const randomSeed = Math.floor(Math.random() * 1000);
+            
+            // Add a timestamp or random number to avoid browser caching and ensure a new image is fetched
+            const apiUrl = `https://placebear.com/200/300?seed=${randomSeed}&t=${new Date().getTime()}`;
+
+            // Update the image source and make it visible
+            bearImage.src = apiUrl;
+            bearImage.alt = "A random bear image";
+            
+            // Ensure the image is visible
+            bearImage.hidden = false;
+        }
+    </script>
+    <script src="sw.js"></script>
+</body>
+</html>
